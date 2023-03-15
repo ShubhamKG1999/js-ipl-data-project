@@ -18,11 +18,11 @@ node index.js
 ## Problems Solved:
 
 ### 1. Number of matches played per year for all the years in IPL.
-### 2. Plot a chart of top 10 batsmen by runs scored in RCB.
-### 3. Plot a chart of foreign umpires by country in IPL.
-### 4. Plot a stacked bar chart of number of games played by team by season.
-### 5. Plot a bar chart of number of matches played per year for all the years in IPL.
-### 6. Plot a stacked bar chart of number of matches won per team per season in IPL.
-### 7. Plot a bar chart of extra runs conceded per team in the year 2016.
-### 8. Plot a bar chart of top 10 economical bowlers in the year 2015.
-### 9. Plot a bar chart of top 10 economical bowlers in the year 2015.
+### 2. Number of matches won per team per year in IPL.
+### 3. Extra runs conceded per team in the year 2016.
+### 4. Top 10 economical bowlers in the year 2015.
+### 5. Find the number of times each team won the toss and also won the match.
+### 6. Find a player who has won the highest number of Player of the Match awards for each season.
+### 7. Find the strike rate of a batsman for each season.
+### 8. Find the highest number of times one player has been dismissed by another player.
+### 9. Find the bowler with the best economy in super overs.
