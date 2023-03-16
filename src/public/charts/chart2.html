@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matches Won Per Team Per Year</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        #container .highcharts-subtitle a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 100%; height: 600px; margin: 0 auto"></div>
+    <script language="JavaScript">
+        function getData(jsonFile, cb) {
+            fetch(`../output/${jsonFile}`)
+                .then(response => response.json())
+                .then(data => {
+                    cb(data);
+                });
+        }
+
+        function cb(data) {
+    $(document).ready(function () {
+        const categories = Object.keys(data);
+        let teamNames = [];
+
+        // Iterate through all team names in the dataset and add them to the teamNames array
+        Object.keys(data).forEach(now => {
+            Object.keys(data[now]).forEach(curr => {
+                if (!teamNames.includes(curr)) {
+                    teamNames.push(curr);
+                }
+            });
+        });
+
+        const seriesData = teamNames.reduce((acc, curr) => {
+            const series = {
+                name: curr,
+                data: categories.reduce((matchesWon, year) => {
+                    matchesWon.push(data[year][curr] || 0);
+                    return matchesWon;
+                }, [])
+            };
+            acc.push(series);
+            return acc;
+        }, []);
+
+        const chartOptions = {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Matches Won Per Team Per Year'
+            },
+            subtitle: {
+                text: 'Source: <a href="https://www.kaggle.com/datasets/manasgarg/ipl" target="_blank">https://www.kaggle.com/datasets/manasgarg/ipl</a>'
+            },
+            xAxis: {
+                categories: categories,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Matches Won'
+                }
+            },
+            series: seriesData
+        };
+
+        $('#container').highcharts(chartOptions);
+    });
+}
+
+        getData('matchesWonPerTeamPerYear.json', cb)
+    </script>
+</body>
+
+</html>

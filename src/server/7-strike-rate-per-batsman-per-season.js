@@ -39,16 +39,21 @@ function countStrikeRateRerBatsmanPerSeason(idInAllYears, deliveriesData) {
 
     
     const strikeRatePerBatsmanPerSeason = {};
-
     // logic to count the  strike-rate per batsman.
     for (let key1 in runsAndBowlsPerBatsmanPerSeason) {
+        let count = 0;
         for (let key2 in runsAndBowlsPerBatsmanPerSeason[key1]) {
+            count++;
 
             (strikeRatePerBatsmanPerSeason.hasOwnProperty(key1) === true) ?
                 strikeRatePerBatsmanPerSeason[key1][key2] =
                 Math.round(((runsAndBowlsPerBatsmanPerSeason[key1][key2]["runs"]
                     / runsAndBowlsPerBatsmanPerSeason[key1][key2]["bowls"]) * 100) * 100) / 100
                 : strikeRatePerBatsmanPerSeason[key1] = {};
+
+            if(count === 10) {
+                break;
+            }
         }
     }
 

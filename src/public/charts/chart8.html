@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <title>Most Dismissal Of A Player By Another</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        #container .highcharts-subtitle a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 100%; height: 600px; margin: 0 auto"></div>
+    <script language="JavaScript">
+        function getData(jsonFile, cb) {
+            fetch(`../output/${jsonFile}`)
+                .then(response => response.json())
+                .then(data => {
+                    cb(data);
+                });
+        }
+        function cb(data) {
+            $(document).ready(function () {
+
+                const values = Object.values(data).reduce((acc, curr) => {
+                    for (let key in curr) {
+                        acc.push([key, curr[key]]);
+                    }
+                    return acc;
+                }, []);
+
+                var chartOptions = {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Most Dismissal Of A Player By Another'
+                    },
+                    subtitle: {
+                        text: 'Source: <a href="https://www.kaggle.com/datasets/manasgarg/ipl" target="_blank">https://www.kaggle.com/datasets/manasgarg/ipl</a>'
+                    },
+                    xAxis: {
+                        title: {
+                            text: 'Batsman'
+                        },
+                        categories: Object.keys(data)
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'No Of Dismissals'
+                        }
+                    },
+                    series: [{
+                        data: values,
+
+                        showInLegend: false
+                    }],
+                    tooltip: {
+                        pointFormat: '<b>{point.y}</b>'
+                    }
+                };
+
+                $('#container').highcharts(chartOptions);
+            });
+        }
+        getData('top10mostDismissalOfOnePlayerByAnother.json', cb)
+    </script>
+</body>
+
+</html>

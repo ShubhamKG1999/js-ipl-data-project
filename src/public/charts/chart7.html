@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Strike Rate Per Batsman Per Season</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        #container .highcharts-subtitle a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 100%; height: 600px; margin: 0 auto"></div>
+    <script language="JavaScript">
+        function getData(jsonFile, cb) {
+            fetch(`../output/${jsonFile}`)
+                .then(response => response.json())
+                .then(data => {
+                    cb(data);
+                });
+        }
+
+        function cb(data) {
+            $(document).ready(function () {
+                const categories = Object.keys(data);
+                let playerNames = [];
+
+                Object.keys(data).forEach(now => {
+                    Object.keys(data[now]).forEach(curr => {
+                        if (!playerNames.includes(curr)) {
+                            playerNames.push(curr);
+                        }
+                    });
+                });
+
+                const seriesData = playerNames.reduce((acc, curr) => {
+                    const series = {
+                        name: curr,
+                        data: categories.reduce((strikeRate, year) => {
+                            strikeRate.push(data[year][curr] || 0);
+                            return strikeRate;
+                        }, [])
+                    };
+
+                    acc.push(series);
+                    return acc;
+                }, []);
+
+                console.log(categories);
+                console.log(seriesData);
+                const chartOptions = {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Strike Rate Per Batsman Per Season'
+                    },
+                    subtitle: {
+                        text: 'Source: <a href="https://www.kaggle.com/datasets/manasgarg/ipl" target="_blank">https://www.kaggle.com/datasets/manasgarg/ipl</a>'
+                    },
+                    xAxis: {
+                        categories: categories,
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Strike Rate'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: seriesData
+                };
+
+                $('#container').highcharts(chartOptions);
+            });
+        }
+
+        getData('strikeRatePerBatsmanPerSeason.json', cb)
+    </script>
+</body>
+
+</html>

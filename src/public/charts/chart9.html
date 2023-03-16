@@ -1,0 +1,64 @@
+<html>
+
+<head>
+   <title>Economy Of Bowlers In Super Overs</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <style>
+      #container .highcharts-subtitle a {
+         text-decoration: underline;
+      }
+   </style>
+</head>
+
+<body>
+   <div id="container" style="width: 100%; height: 600px; margin: 0 auto"></div>
+   <script language="JavaScript">
+      function getData(jsonFile, cb) {
+         fetch(`../output/${jsonFile}`)
+            .then(response => response.json())
+            .then(data => {
+               cb(data);
+            });
+      }
+      function cb(data) {
+         $(document).ready(function () {
+            
+            var chartOptions = {
+               chart: {
+                  type: 'column'
+               },
+               title: {
+                  text: 'Economy Of Bowlers in Super Overs'
+               },
+               subtitle: {
+                  text: 'Source: <a href="https://www.kaggle.com/datasets/manasgarg/ipl" target="_blank">https://www.kaggle.com/datasets/manasgarg/ipl</a>'
+               },
+               xAxis: {
+                  title: {
+                     text: 'Bowler'
+                  },
+                  categories: Object.keys(data)
+               },
+               yAxis: {
+                  title: {
+                     text: 'Economy'
+                  }
+               },
+               series: [{
+                  data: Object.values(data),
+                  showInLegend: false
+               }],
+               tooltip: {
+                  pointFormat: '<b>{point.y}</b>'
+               }
+            };
+
+            $('#container').highcharts(chartOptions);
+         });
+      }
+      getData('bowlerWithEconomyInSuperOvers.json', cb)
+   </script>
+</body>
+
+</html>

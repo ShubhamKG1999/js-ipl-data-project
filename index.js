@@ -51,25 +51,28 @@ Promise.all([matchesPromise, deliveriesPromise]).then(([matchesData, deliveriesD
 
     // counting the strike rate per batsman per season in all seasons.
     const idInAllYears = getIdInAllYears(matchesData);
-    const strikeRateRerBatsmanPerSeason = countStrikeRatePerBatsmanPerSeason(idInAllYears, deliveriesData);
+    const strikeRatePerBatsmanPerSeason = countStrikeRatePerBatsmanPerSeason(idInAllYears, deliveriesData);
 
     // counting the highest number of dismissal of a player by another player.
     const dismissalOfOnePlayerByAnother = countDismissalOfOnePlayerByAnother(deliveriesData);
     const mostDismissalOfAPlayerByAnother = topMostOfObjectOfObjects(dismissalOfOnePlayerByAnother);
     const mostDismissalOfOnePlayerByAnother = topOfObjectOfObjects(mostDismissalOfAPlayerByAnother, 1);
+    const top10mostDismissalOfOnePlayerByAnother = topOfObjectOfObjects(mostDismissalOfAPlayerByAnother, 10);
 
     // counting the economy of all bowlers in super overs.
     const bowlerWithEconomyInSuperOvers = countBowlerWithEconomyInSuperOvers(deliveriesData);
     const bowlerWithBestEconomyInSuperOvers = topOfObject(bowlerWithEconomyInSuperOvers, 1);
 
     // writing to JSON file
-    fileWriter("./src/public/matchesPerYear.json", matchesPerYear);
-    fileWriter("./src/public/matchesWonPerTeamPerYear.json", matchesWonPerTeamPerYear);
-    fileWriter("./src/public/extraRunsPerTeamIn2016.json", extraRunsPerTeamIn2016);
-    fileWriter("./src/public/tossesAndMatchesWonPerTeam.json", tossesAndMatchesWonPerTeam);
-    fileWriter("./src/public/top10EconomicalBowlersIn2015.json", top10EconomicalBowlersIn2015);
-    fileWriter("./src/public/playerWithMostPotmPerSeason.json", playerWithMostPotmPerSeason);
-    fileWriter("./src/public/strikeRateRerBatsmanPerSeason.json", strikeRateRerBatsmanPerSeason);
-    fileWriter("./src/public/mostDismissalOfOnePlayerByAnother.json", mostDismissalOfOnePlayerByAnother);
-    fileWriter("./src/public/bowlerWithBestEconomyInSuperOvers.json", bowlerWithBestEconomyInSuperOvers);
+    fileWriter("./src/public/output/matchesPerYear.json", matchesPerYear);
+    fileWriter("./src/public/output/matchesWonPerTeamPerYear.json", matchesWonPerTeamPerYear);
+    fileWriter("./src/public/output/extraRunsPerTeamIn2016.json", extraRunsPerTeamIn2016);
+    fileWriter("./src/public/output/tossesAndMatchesWonPerTeam.json", tossesAndMatchesWonPerTeam);
+    fileWriter("./src/public/output/top10EconomicalBowlersIn2015.json", top10EconomicalBowlersIn2015);
+    fileWriter("./src/public/output/playerWithMostPotmPerSeason.json", playerWithMostPotmPerSeason);
+    fileWriter("./src/public/output/strikeRatePerBatsmanPerSeason.json", strikeRatePerBatsmanPerSeason);
+    fileWriter("./src/public/output/mostDismissalOfOnePlayerByAnother.json", mostDismissalOfOnePlayerByAnother);
+    fileWriter("./src/public/output/top10mostDismissalOfOnePlayerByAnother.json", top10mostDismissalOfOnePlayerByAnother);
+    fileWriter("./src/public/output/bowlerWithBestEconomyInSuperOvers.json", bowlerWithBestEconomyInSuperOvers);
+    fileWriter("./src/public/output/bowlerWithEconomyInSuperOvers.json", bowlerWithEconomyInSuperOvers);
 });
