@@ -29,7 +29,6 @@
         const categories = Object.keys(data);
         let teamNames = [];
 
-        // Iterate through all team names in the dataset and add them to the teamNames array
         Object.keys(data).forEach(now => {
             Object.keys(data[now]).forEach(curr => {
                 if (!teamNames.includes(curr)) {
